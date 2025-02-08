@@ -79,4 +79,17 @@ class UsersDB {
         }
     }
 
+    public static function getUserValidation($username, $password){
+        $db = new Database();
+        $dbConn = $db->getDBConn();
+
+        if ($dbConn){
+            $query = "Select * From users Where username = '$username' and password = '$password'"; 
+            $result = $dbConn->query($query);
+            return $result->fetch_assoc();
+        } else {
+            return false;
+        }
+    }
+
 }
