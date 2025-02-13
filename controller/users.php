@@ -20,6 +20,7 @@ class User{
     public function __construct($first_name, $last_name, $profile_image, $date_of_birth, $phone_number, $address, $city, $state, $zip, $email, $username, $password, $user_level, $count_created, $id_user=null){
         $this->first_name = $first_name;
         $this->last_name = $last_name;
+        $this->profile_image = $profile_image;
         $this->date_of_birth = $date_of_birth;
         $this->phone_number = $phone_number;
         $this->address = $address;

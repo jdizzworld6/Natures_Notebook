@@ -20,8 +20,8 @@ class PhotoController {
     }
 // Get all photos
 // tested
-    public static function getAllPhotos(){
-        $queryRes = PhotoDB::getAllPhotos();
+    public static function getAllPhotosByUser($userID){
+        $queryRes = PhotoDB::getAllPhotosUser($userID);
         
         if ($queryRes){
             $photos = [];
