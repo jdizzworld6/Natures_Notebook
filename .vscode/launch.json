@@ -8,16 +8,9 @@
             "type": "chrome",
             "request": "launch",
             "name": "Launch Chrome against localhost",
-            "url": "http://localhost//Natures_Notebook-1",
+            "url": "https://localhost//Natures_Notebook-1",
             "webRoot": "${workspaceFolder}"
         }
-        // {
-        //     "type": "chrome",
-        //     "request": "launch",
-        //     "name": "Launch Chrome against localhost",
-        //     "url": "http://localhost//natures_notebook",
-        //     "webRoot": "${workspaceFolder}"
-        // }
     ]
 }
 // C:\xampp\htdocs\CIS224_Week4_GP1\view\conn_status.php

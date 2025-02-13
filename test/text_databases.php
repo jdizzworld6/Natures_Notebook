@@ -2,9 +2,10 @@
 
 require_once '../model/database.php';
 require_once '../model/user_db.php';
-// require_once '../model/photo_category.php';
-// require_once '../model/photo.php';
+require_once '../model/photo_category_db.php';
+require_once '../model/photo_db.php';
 require_once '../model/friends_db.php';
+require_once '../model/blocklist_db.php';
 
 // $db1 = new Database();
 
@@ -39,6 +40,15 @@ require_once '../model/friends_db.php';
 
 // PhotoDB::deletePhoto(2);
 
-$r = FriendDB::getAllFriends(1);
+// $r = FriendDB::getAllFriends(1);
+
+
+
+// $r = BlocklistDB::getAllBlocklist();
+// $r = BlocklistDB::getBlocklistById(1);
+// $r = BlocklistDB::deleteBlocklist(1);
+// $r = BlocklistDB::addBlocklist('406-666-8888', 'test2@gmail.com');
+$r = BlocklistDB::updateBlocklist('406-855-0555', 'test1@gmail.com', 1);
+
 $test = "test";
 

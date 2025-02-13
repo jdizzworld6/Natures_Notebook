@@ -2,14 +2,14 @@
 // Creating a class to connect to database then querying results
 require_once 'database.php';
 
-class PhotoCategoryDB {
+class BlocklistDB {
     // Query for getting single user by id
-    public static function getPhotoCategoryById($id_photo_category){
+    public static function getBlocklistById($id){
         $db = new Database();
         $dbConn = $db->getDBConn();
 
         if ($dbConn){
-            $query = "Select * From photo_category Where id_photo_category = '$id_photo_category'"; 
+            $query = "Select * From blocklist Where id_blocklist = '$id'"; 
             $result = $dbConn->query($query);
             return $result->fetch_assoc();
         } else {
@@ -18,23 +18,23 @@ class PhotoCategoryDB {
     }
     
     // Query for getting all users
-    public static function getAllPhotoCategory(){
+    public static function getAllBlocklist(){
         $db = new Database();
         $dbConn = $db->getDBConn();
 
         if ($dbConn){
-            $query = "Select * From photo_category"; 
+            $query = "Select * From blocklist"; 
             return $dbConn->query($query);
         } else {
             return false;
         }
     }
     // Query for getting deleting user
-    public static function deletePhotoCategory($id_photo_category){
+    public static function deleteBlocklist($id_blocklist){
         $db = new Database();
         $dbConn = $db->getDBConn();
         if($dbConn){
-            $query = "Delete From photo_category Where id_photo_category = $id_photo_category";
+            $query = "Delete From blocklist Where id_blocklist = $id_blocklist";
 
         return $dbConn->query($query) === true;
         } else {
@@ -42,13 +42,12 @@ class PhotoCategoryDB {
         }
     }
     // Query for adding new user into database
-    public static function addPhotoCategory($category_name, $category_description) {
+    public static function addBlocklist($phone_number, $email) {
         $db = new Database();
         $dbConn = $db->getDbConn();
 
-
         if ($dbConn) {
-            $query = "Insert Into photo_category (category_name, category_description) Values ('" . $category_name . "', '" . $category_description . "')";
+            $query = "Insert blocklist (phone_number, email) Values ('" . $phone_number . "', '" . $email . "')";
 
             return $dbConn->query($query) === true;
         } else {
@@ -56,14 +55,14 @@ class PhotoCategoryDB {
         }
     }
     // Query for updating existing user in database 
-    public static function updatePhotoCategory($id_photo_category, $category_name, $category_description) {
+    public static function updateBlocklist($phone_number, $email, $id_blocklist) {
         $db = new Database();
         $dbConn = $db->getDbConn();
 
         if ($dbConn) {
-            $query = "Update photo_category Set category_name = '$category_name', 
-            category_description = '$category_description'
-            Where id_photo_category = $id_photo_category";
+            $query = "Update blocklist Set phone_number = '$phone_number',
+                email = '$email' 
+                Where id_blocklist = $id_blocklist";
             
             return $dbConn->query($query) === true;
         } else {

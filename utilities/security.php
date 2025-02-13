@@ -30,10 +30,10 @@ class Security{
         switch ($userLevel) {
             case '1':
                 $_SESSION['admin_level'] = true;
-                header('Location: view/admin.php');
+                header('Location: admin_manage_users.php');
                 break;
             case '2':
-                $_SESSION['tech_level'] = true;
+                $_SESSION['user_level'] = true;
                 header('Location: view/user.php');
                 break;
             default:
