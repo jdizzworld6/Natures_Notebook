@@ -32,7 +32,6 @@ if (isset($_POST['update'])){
         header('Location: ./admin_manage_category_add_update.php?pNo=' . $_POST['categoryUpdateNo']);
     }
 }
-
 ?>
 
 <html>
