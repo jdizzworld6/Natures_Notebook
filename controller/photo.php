@@ -8,9 +8,10 @@ class Photo{
     private $description;
     private $photo_url;
     private $upload_date;
+    private $location;
 
 // creating a user class with user information
-    public function __construct($id_user, $id_photo_category, $photo_name, $description, $photo_url, $upload_date, $id_photo=null){
+    public function __construct($id_user, $id_photo_category, $photo_name, $description, $photo_url, $upload_date, $location, $id_photo=null){
         $this->id_user = $id_user;
         $this->id_photo_category = $id_photo_category;
         $this->photo_name = $photo_name;
@@ -18,6 +19,7 @@ class Photo{
         $this->photo_url = $photo_url;
         $this->upload_date = $upload_date;
         $this->id_photo = $id_photo;
+        $this->location = $location;
     }
     // create setters
     public function setId_photo($id_photo){
@@ -41,6 +43,9 @@ class Photo{
     public function setUpload_date($upload_date){
         $this->upload_date = $upload_date;
     }
+    public function setLocation($location){
+        $this->location = $location;
+    }
 
     // create getters
     public function getId_photo(){
@@ -63,6 +68,9 @@ class Photo{
     }
     public function getUpload_date(){
         return $this->upload_date;
+    }
+    public function getLocation(){
+        return $this->location;
     }
     
 }

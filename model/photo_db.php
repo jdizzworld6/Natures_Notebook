@@ -63,14 +63,14 @@ class PhotoDB {
     }
 
     // Get all photos for one user by one category
-    // tested
+    // tested / changed location without testing
     public static function getAllPhotosUserAndCategory($id_user, $id_photo_category){
 
         $db = new Database();
         $dbConn = $db->getDBConn();
 
         if ($dbConn){
-            $query = "Select p.id_photo, p.id_user, p.id_photo_category, p.photo_name, p.description, p.photo_url, p.upload_date
+            $query = "Select p.id_photo, p.id_user, p.id_photo_category, p.photo_name, p.description, p.photo_url, p.upload_date, p.location
              From photo p 
              JOIN
              photo_category pc on p.id_photo_category = pc.id_photo_category
@@ -96,14 +96,14 @@ class PhotoDB {
         }
     }
     // Query for adding new user into database
-    // tested
-    public static function addPhoto($id_user, $id_photo_category, $photo_name, $description, $photo_url, $upload_date) {
+    // tested changed location without testing
+    public static function addPhoto($id_user, $id_photo_category, $photo_name, $description, $photo_url, $upload_date, $location) {
         $db = new Database();
         $dbConn = $db->getDbConn();
 
         if ($dbConn) {
-            $query = "Insert Into photo (id_user, id_photo_category, photo_name, description, photo_url, upload_date)
-                Values($id_user, $id_photo_category, '$photo_name', '$description', '$photo_url', '$upload_date')";
+            $query = "Insert Into photo (id_user, id_photo_category, photo_name, description, photo_url, upload_date, location)
+                Values($id_user, $id_photo_category, '$photo_name', '$description', '$photo_url', '$upload_date', '$location')";
 
             return $dbConn->query($query) === true;
         } else {
@@ -111,8 +111,8 @@ class PhotoDB {
         }
     }
     // Query for updating existing user in database 
-    // tested
-    public static function updatePhoto($id_photo, $id_user, $id_photo_category, $photo_name, $description, $photo_url, $upload_date) {
+    // tested changed location without testing
+    public static function updatePhoto($id_photo, $id_user, $id_photo_category, $photo_name, $description, $photo_url, $upload_date, $location) {
         $db = new Database();
         $dbConn = $db->getDbConn();
 
@@ -123,7 +123,8 @@ class PhotoDB {
                     photo_name = '$photo_name',
                     description = '$description',
                     photo_url = '$photo_url',
-                    upload_date = '$upload_date'
+                    upload_date = '$upload_date',
+                    location = '$location'
                     Where id_photo = $id_photo";
             
             return $dbConn->query($query) === true;

@@ -197,5 +197,4 @@ if (isset($_POST['save'])){
         $passAllInputBoxTest = true;
     }
 
-    $test = "";
  }

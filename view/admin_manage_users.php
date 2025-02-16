@@ -11,23 +11,26 @@
         Security::logout();
     }
     // deletes user
-    if (isset($_POST['delete'])) {
-        if (isset($_POST['userDeleteNo'])){
-            UsersController::deleteUser($_POST['userDeleteNo']);
-        }
+
+    if (isset($_POST['userDeleteNo'])){
+        UsersController::deleteUser($_POST['userDeleteNo']);
     }
+    
     // updates user
-    if (isset($_POST['update'])){
-        if (isset($_POST['userUpdateNo'])){
-            header('Location: ./admin_add_update_user.php?pNo=' . $_POST['userUpdateNo']);
-        }
+
+    if (isset($_POST['userUpdateNo'])){
+        header('Location: ./admin_add_update_user.php?pNo=' . $_POST['userUpdateNo']);
     }
 // See user photos
-if (isset($_POST['userPhotos'])){
+
     if (isset($_POST['userPhotos'])){
         header('Location: ./admin_user_photos.php?pNo=' . $_POST['userPhotos']);
     }
-}
+
+
+    if (isset($_POST['add_photos'])){
+        header('Location: ./admin_add_photo.php?pNo=' . $_POST['userPhotos']);
+    }
 
 ?>
 
@@ -93,6 +96,10 @@ if (isset($_POST['userPhotos'])){
         <td><form method="post">
                 <input type="hidden" name="userPhotos" value="<?php echo $user->getId_user(); ?>">
                 <input type="submit" name="photos" value="Photos">
+            </form></td>
+        <td><form method="post">
+                <input type="hidden" name="userPhotos" value="<?php echo $user->getId_user(); ?>">
+                <input type="submit" name="add_photos" value="Add Photo">
             </form></td>
         
     </tr>

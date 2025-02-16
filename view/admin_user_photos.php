@@ -9,7 +9,7 @@
     Security::checkHTTPS();
     Security::checkAuthority('admin_level');
 
-    $photos = new Photo("","","","","","");
+    $photos = new Photo("","","","","","","");
 
     if (isset($_GET['pNo'])) {
         $user = UsersController::getUserById($_GET['pNo']);
@@ -24,6 +24,9 @@
 if (isset($_POST['delete'])) {
     if (isset($_POST['photoDeleteNo'])){
         PhotoController::deletePhoto($_POST['photoDeleteNo']);
+        $testurl = 'Location: ' . $_SERVER['PHP_SELF'] . "?pNo=" . $_GET['pNo'];
+        header('Location: ' . $_SERVER['PHP_SELF'] . "?pNo=" . $_GET['pNo']);
+        exit();
     }
 }
 // updates user
@@ -43,8 +46,10 @@ if (isset($_POST['update'])){
     <?php foreach ($photos as $photo) : ?>
         <div class="col">
             <form method="post">
-                <a href="">
-                    <img src=<?php echo "images\\" . $photo->getPhoto_url() ?>>
+                <a href="<?php echo "admin_update_single_photo.php?q=SinglePhoto&ID_photo=" . 
+                    $photo->getId_photo() . "&IDUser=" . $user->getId_user()?>">
+                    
+                    <img src=<?php echo "images\\" . $photo->getPhoto_url()?>>
                 </a>
                 <input type="hidden" name="photoDeleteNo" value="<?php echo $photo->getId_photo() ?>">
                 <input type="submit" name="delete"  value = "Delete">

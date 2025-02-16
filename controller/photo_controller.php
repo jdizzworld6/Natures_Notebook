@@ -4,7 +4,7 @@ require_once '../model/photo_db.php';
 require_once 'photo.php';
 
 // Parsing query results
-// tested
+// tested changed location without testing
 class PhotoController {
     public static function rowToPhoto($row) {
         $photo = new Photo(
@@ -14,6 +14,7 @@ class PhotoController {
             $row['description'],
             $row['photo_url'],
             $row['upload_date'],
+            $row['location'],
             $row['id_photo']
         );
         return $photo;
@@ -50,7 +51,7 @@ class PhotoController {
         return PhotoDB::deletePhoto($id_photo);
     }
 // Add photo
-// tested
+// tested changed location without testing
     public static function addPhoto($photo){
         return PhotoDB::addPhoto(
             $photo->getId_user(),
@@ -58,11 +59,12 @@ class PhotoController {
             $photo->getPhoto_name(),
             $photo->getDescription(),
             $photo->getPhoto_url(),
-            $photo->getUpload_date()
+            $photo->getUpload_date(),
+            $photo->getLocation()
         );
     }
 // Update photo
-// tested
+// tested changed location without testing
     public static function updatePhoto($photo){
         return PhotoDB::updatePhoto(
             $photo->getId_photo(),
@@ -71,7 +73,8 @@ class PhotoController {
             $photo->getPhoto_name(),
             $photo->getDescription(),
             $photo->getPhoto_url(),
-            $photo->getUpload_date()
+            $photo->getUpload_date(),
+            $photo->getLocation()
         );
     }
 
