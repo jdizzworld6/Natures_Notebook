@@ -81,7 +81,7 @@ class User{
     public function setcount_created($count_created){
         $this->count_created = $count_created;
     }
-
+// creating getters
     public function getId_user(){
         return $this->id_user;
     }

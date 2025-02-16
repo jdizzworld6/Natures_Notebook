@@ -1,5 +1,5 @@
 <?php
-
+// Friend class to add friend to users account
 class Friends{
     private $id_friends;
     private $id_user;

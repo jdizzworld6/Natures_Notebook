@@ -1,3 +1,4 @@
+<!-- Nav bar for all admin pages -->
 <?php echo '
 
 <head>

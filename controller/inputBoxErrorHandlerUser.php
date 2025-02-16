@@ -52,7 +52,7 @@ Class inputBoxErrorHandler {
             }
         }
     }
-
+// phone number test
     function phoneNumberTest() {
         // Remove any non-digit characters
         $cleanedPhoneNumber = preg_replace('/[^0-9]/', '', $this->input);

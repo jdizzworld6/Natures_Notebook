@@ -20,7 +20,7 @@
 if (isset($_POST['fileUpload'])){
     $fileName = $_FILES['myFile']['name'];
     $randomNumber = rand(1, 999999999);
-
+// imports and renames image file to prevent duplication
     if ($fileName !== null){
         // -------------start here with pass checker ----------
         if ($passAllInputBoxTest) {
@@ -30,7 +30,7 @@ if (isset($_POST['fileUpload'])){
         move_uploaded_file($_FILES['myFile']['tmp_name'], $target);
 
         $didrename = rename($dir . $fileName, $dir . $newImageName);
-    
+    // add image file to user
         $photo = new Photo((int)$_GET['pNo'], (int)$_POST['photo_category'],$_POST['name'],$_POST['description'], $newImageName, $_POST['date_found'], $_POST['location']);
     
         PhotoController::addPhoto($photo);
@@ -73,8 +73,6 @@ if (isset($_POST['fileUpload'])){
         <label for="description">Description:</label>
         <br>
         <textarea name="description" cols="75" rows="10"></textarea>
-
-
         <input type="submit" name="fileUpload" value="Upload">
     </form>
 

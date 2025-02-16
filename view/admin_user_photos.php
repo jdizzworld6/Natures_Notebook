@@ -10,12 +10,12 @@
     Security::checkAuthority('admin_level');
 
     $photos = new Photo("","","","","","","");
-
+// gets user by id
     if (isset($_GET['pNo'])) {
         $user = UsersController::getUserById($_GET['pNo']);
         $userphoto = $user->getProfile_image();
     }
-
+// Gets all photos
     if (isset($_GET['pNo'])) {
         $photos = PhotoController::getAllPhotosByUser($_GET['pNo']);
     }

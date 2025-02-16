@@ -12,6 +12,7 @@
 if (isset($_POST['logout'])){
     Security::logout();
 }
+
 // creating new user
 $user = new User('', '', '', '', '', '', '', '','','','','','','');
 // setting userNo

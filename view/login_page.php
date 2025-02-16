@@ -7,7 +7,7 @@
     Security::checkHTTPS();
 
     $login_message = isset($_SESSION['log_message']) ? $_SESSION['log_message'] : '';
-
+// allws user to login check credentials
     if (isset($_POST['logID']) & isset($_POST['password'])){
       $userLevel = UsersController::validUser($_POST['logID'], $_POST['password']);
       Security::setUserLevelSession($userLevel);

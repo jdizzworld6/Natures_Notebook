@@ -36,7 +36,7 @@ Class inputBoxErrorHandler {
             }
         }
     }
-
+// ensures a category is selected
     public function testCategorySelect() {
         $catSelected = $this->input;
 
@@ -52,8 +52,6 @@ if (isset($_POST['save'])){
 
     $passAllInputBoxTest= false;
 
-    // Name test
-
     $photoNameTest = new inputBoxErrorHandler(isset($_POST['fileUpload']), $_POST['name'], 4, "Photo Name is required");
 
     $photoNameTestReturn = $photoNameTest->testInputBox();
@@ -62,15 +60,8 @@ if (isset($_POST['save'])){
 
     $categorySelectReturn = $categorySelect->testCategorySelect();
 
-
-    // Description test
-
-
-
-
     if ($photoNameTestReturn == "" && $categorySelectReturn = "") {
         $passAllInputBoxTest = true;
     }
-
 
  }

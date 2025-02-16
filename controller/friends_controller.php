@@ -3,7 +3,7 @@
 require_once '../model/friends_db.php';
 require_once 'friends.php';
 
-
+// User controlls for freinds relationship with users
 class FriendsController {
     public static function rowToFriend($row) {
         $friend = new Friends(
@@ -13,6 +13,7 @@ class FriendsController {
         );
         return $friend;
     }
+    // retrieve all friends
     public static function getAllFriends($friends){
         $queryRes = FriendDB::getAllFriends($friends->getIdUser());
         
@@ -26,7 +27,7 @@ class FriendsController {
             return false;
         }
     }
-
+// retrieve friend by id
     public static function getFriendById($friends){
         $queryRes = FriendDB::getFriendById($friends->getIdFriends());
         
@@ -36,11 +37,11 @@ class FriendsController {
             return false;
         }
     }
-
+// delete friend from user
     public static function deleteFriend($friends){
         return FriendDB::getDeleteFriend($friends->getIdFriends());
     }
-
+// add friend
     public static function addFriend($friends){
         return FriendDB::getAddFriend($friends->getIdUser(), $friends->getIdYourFriends());
     }

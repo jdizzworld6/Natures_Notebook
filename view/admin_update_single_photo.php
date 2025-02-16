@@ -10,18 +10,18 @@ require_once '../controller/photo_controller.php';
 require_once '../controller/inputBoxErrorHandlerPhotoCategory.php';
 
 
-
 // Checking security
 Security::checkAuthority('admin_level');
 // user logout
 if (isset($_POST['logout'])){
     Security::logout();
 }
-
+// gets one user by id
 if (isset($_GET['IDUser'])) {
     $user = UsersController::getUserById($_GET['IDUser']);
 }
 
+// gets one user photo to be updated
 if (isset($_GET['ID_photo'])) {
     $photo = PhotoController::getPhotoById($_GET['ID_photo']);
     $photo_categories = PhotoCategoryController::getAllPhotoCategory();
@@ -39,7 +39,7 @@ if (isset($_POST['update_photo'])){
     header('Location: ./admin_manage_users.php');
     
 }
-
+// Allows user to cancel
 if (isset($_POST['cancel'])){
     header('Location: ./admin_manage_users.php');
 }
