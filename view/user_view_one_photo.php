@@ -1,5 +1,5 @@
 <?php
-session_start();
+
 require_once '../utilities/security.php';
 require_once '../controller/users.php';
 require_once '../controller/users_controller.php';
@@ -11,14 +11,14 @@ require_once '../controller/inputBoxErrorHandlerPhotoCategory.php';
 
 
 // Checking security
-Security::checkAuthority('admin_level');
+Security::checkAuthority('user_level');
 // user logout
 if (isset($_POST['logout'])){
     Security::logout();
 }
 // gets one user by id
-if (isset($_GET['IDUser'])) {
-    $user = UsersController::getUserById($_GET['IDUser']);
+if (isset($_SESSION['user_id'])) {
+    $user = UsersController::getUserById($_SESSION['user_id']);
 }
 
 // gets one user photo to be updated
@@ -32,22 +32,33 @@ if (isset($_GET['ID_photo'])) {
 if (isset($_POST['update_photo'])){
     $id_category = (int)$_POST['photo_category'];
     $photo_url = $photo->getPhoto_url();
-    $photo = new Photo((int)$_GET['IDUser'], $id_category, $_POST['photo_name'], $_POST['description'], $photo_url, $_POST['upload_date'], $_POST['location'], (int)$_GET['ID_photo']);
+    $photo = new Photo((int)$_SESSION['user_id'], $id_category, $_POST['photo_name'], $_POST['description'], $photo_url, $_POST['upload_date'], $_POST['location'], (int)$_GET['ID_photo']);
 
     PhotoController::updatePhoto($photo);
-    $test = 'Location: ./admin_user_photos.php?pNo=' . $_GET['IDUser'];
-    header('Location: ./admin_user_photos.php?pNo=' . $_GET['IDUser']);
+    header('Location: ./user_all_photos.php');
     
 }
 // Allows user to cancel
 if (isset($_POST['cancel'])){
-    header('Location: ./admin_user_photos.php?pNo=' . $_GET['IDUser']);
+    header('Location: ./user_all_photos.php');
+}
+
+if (isset($_POST['delete'])) {
+    $delete_image_url = 'C:\xampp\htdocs\Natures_Notebook-1\view\images\\' . $photo->getPhoto_url();
+    if (file_exists($delete_image_url)){
+        unlink($delete_image_url);
+        PhotoController::deletePhoto($photo->getId_photo());
+        header('Location: ./user_all_photos.php');
+        exit();
+    } else {
+        $delete_error = "<h4 style='color: red;'>Delete Error Your Photo Did Not Delete</h4>";
+    }
 }
 
 ?>
 
 <html>
-    <?php require_once("admin_nav_bar.php"); ?>
+    <?php require_once("user_nav_bar.php"); ?>
 
     <form method="post">
         <img src=" <?php echo "images\\" . $photo->getPhoto_url() ?>" alt="">
@@ -88,6 +99,7 @@ if (isset($_POST['cancel'])){
         <br>
         <input type="submit" name="update_photo" value="Update">
         <input type="submit" name="cancel" value="Cancel">
+        <input type="submit" name="delete" value="Delete">
     
     </form>
 

@@ -7,9 +7,10 @@ class UsersDB {
     public static function getUserById($id){
         $db = new Database();
         $dbConn = $db->getDBConn();
+        $id = (int)$id;
 
         if ($dbConn){
-            $query = "Select * From users Where id_user = '$id'"; 
+            $query = "Select * From users Where id_user = $id"; 
             $result = $dbConn->query($query);
             return $result->fetch_assoc();
         } else {
@@ -18,12 +19,17 @@ class UsersDB {
     }
     
     // Query for getting all users
-    public static function getAllUsers(){
+    public static function getAllUsers($id_user = null){
         $db = new Database();
         $dbConn = $db->getDBConn();
-
+        
         if ($dbConn){
-            $query = "Select * From users"; 
+            if ($id_user != null){
+                $id_user = (int)$id_user;
+                $query = "Select * From users Where id_user != $id_user"; 
+            } else {
+                $query = "Select * From users"; 
+            }
             return $dbConn->query($query);
         } else {
             return false;
@@ -59,7 +65,6 @@ class UsersDB {
     public static function updateUser($id_user, $first_name, $last_name, $profile_image, $date_of_birth, $phone_number, $address, $city, $state, $zip, $email, $username, $password) {
         $db = new Database();
         $dbConn = $db->getDbConn();
-
         if ($dbConn) {
             $query = "Update users Set first_name = '$first_name',
                 last_name = '$last_name',
@@ -79,7 +84,6 @@ class UsersDB {
             return false;
         }
     }
-
     public static function getUserValidation($username, $password){
         $db = new Database();
         $dbConn = $db->getDBConn();

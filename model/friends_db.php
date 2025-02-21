@@ -27,6 +27,7 @@ class FriendDB {
     public static function getAllFriends($id_user){
         $db = new Database();
         $dbConn = $db->getDBConn();
+        $id_user = (int)$id_user;
 
         if ($dbConn){
             $query = "
@@ -43,14 +44,17 @@ class FriendDB {
     }
     // delete friend by id
     // tested
-    public static function getDeleteFriend($id_friends){
+    public static function getDeleteFriend($id_user, $id_friends){
         $db = new Database();
         $dbConn = $db->getDBConn();
+
+        $id_user = (int)$id_user;
+        $id_friends = (int)$id_friends;
 
         if ($dbConn){
             $query = "
             DELETE FROM friends
-            WHERE id_friends = $id_friends";
+            WHERE id_your_friends = $id_friends && id_user = $id_user";
 
             return $dbConn->query($query);
         } else {
@@ -67,6 +71,25 @@ class FriendDB {
             $query = "
             INSERT INTO friends (id_user, id_your_friends)
             VALUES ($id_user, $id_your_friends)";
+
+            return $dbConn->query($query);
+        } else {
+            return false;
+        }
+    }
+
+    public static function getFriendsStatus($id_user, $id_your_friends){
+        $db = new Database();
+        $dbConn = $db->getDBConn();
+
+        $id_user = (int)$id_user;
+        $id_your_friends = (int)$id_your_friends;
+
+        if ($dbConn){
+            $query = "
+            SELECT id_friends
+            FROM friends
+            WHERE id_user = $id_user && id_your_friends = $id_your_friends";
 
             return $dbConn->query($query);
         } else {

@@ -21,6 +21,8 @@ Class ImageUtilities{
             $origImage = imagecreatefrompng($orig);
         } elseif ($type === IMAGETYPE_JPEG) {
             $origImage = imagecreatefromjpeg($orig);
+        } else {
+            return 'Unsupported image type';
         }
 
         $origWidth = imagesx($origImage);
@@ -32,6 +34,21 @@ Class ImageUtilities{
 
         $newWidth = round($origWidth / $ratio);
         $newHeight = round($origHeight / $ratio);
+
+        $exif = exif_read_data($orig);
+        if(!empty($exif['Orientation'])) {
+        switch($exif['Orientation']) {
+        case 8:
+            $origImage = imagerotate($origImage,90,0);
+            break;
+        case 3:
+            $origImage = imagerotate($origImage,180,0);
+            break;
+        case 6:
+            $origImage = imagerotate($origImage,-90,0);
+            break;
+        } 
+        }
 
         $newImg = imagecreatetruecolor($newWidth, $newHeight);
 
@@ -45,35 +62,34 @@ Class ImageUtilities{
     public static function ProcessImage($file) {
         
         $fInfo = pathinfo($file);
-        $file200 = $fInfo['dirname'] . '/200/' . $fInfo['basename'];
+        $file500 = $fInfo['dirname'] . "/" . $fInfo['basename'];
 
         $imgType = getimagesize($file)[2];
-        $newImg200 = self::ResizeImage($file, $imgType, 200);
+        $newImg500 = self::ResizeImage($file, $imgType, 500);
 
 
 
         switch($imgType){
             case IMAGETYPE_PNG:
-                imagepng($newImg200, $file200);
+                imagepng($newImg500, $file500);
 
                 break;
             case IMAGETYPE_JPEG:
-                imagejpeg($newImg200, $file200);
+                imagejpeg($newImg500, $file500);
 
 
                 break;
             default:
-                exit;
+                return 'Unsupported image type';
         }
 
-        imagedestroy($newImg200);
+        $result = imagedestroy($newImg500);
 
 
     }
 // Deletes image out of all directories
     public static function DeleteImageFiles($dir, $base) {
         unlink($dir . $base);
-        unlink($dir . '200/' . $base);
     }
 
 

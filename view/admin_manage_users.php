@@ -1,5 +1,5 @@
 <?php
-    session_start();
+
     require_once '../utilities/security.php';
     require_once '../controller/users_controller.php';
     require_once '../controller/users.php';
@@ -7,9 +7,6 @@
     Security::checkHTTPS();
     Security::checkAuthority('admin_level');
 
-    if (isset($_POST['logout'])){
-        Security::logout();
-    }
     // deletes user
 
     if (isset($_POST['userDeleteNo'])){
@@ -19,7 +16,7 @@
     // updates user
 
     if (isset($_POST['userUpdateNo'])){
-        header('Location: ./admin_add_update_user.php?pNo=' . $_POST['userUpdateNo']);
+        header('Location: ./admin_user_add_update_user.php?pNo=' . $_POST['userUpdateNo']);
     }
 // See user photos
 

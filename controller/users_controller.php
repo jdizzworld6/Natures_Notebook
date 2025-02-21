@@ -1,6 +1,6 @@
 <?php
 
-require_once '../model/user_db.php';
+include_once dirname(__FILE__) . '/../model/user_db.php';
 require_once 'users.php';
 
 
@@ -29,8 +29,8 @@ class UsersController {
     }
     // get all users
     // tested
-    public static function getAllUsers(){
-        $queryRes = UsersDB::getAllUsers();
+    public static function getAllUsers($id_user = null){
+        $queryRes = UsersDB::getAllUsers($id_user);
         
         if ($queryRes){
             $users = [];
@@ -104,7 +104,7 @@ class UsersController {
         if($queryRes){
             $user = self::rowToUsers($queryRes);
             if ($user->getPassword() === $password){
-                return $user->getUserLevel();
+                return $user;
             } else {
                 return false;
             }

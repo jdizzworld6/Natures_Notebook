@@ -6,7 +6,6 @@ class Database
     private $dbname = "db_natures_notebook";
     private $username = 'BusyBees';
     private $password = 'SierJerSDC480';
-
     private $conn;
     private $conn_error;
 

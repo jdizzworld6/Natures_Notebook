@@ -1,5 +1,5 @@
 <?php
-    session_start();
+
     require_once '../utilities/security.php';
     require_once '../controller/users_controller.php';
     require_once '../controller/users.php';
@@ -9,17 +9,18 @@
     require_once '../controller/photo_controller.php';
     
     Security::checkHTTPS();
-    Security::checkAuthority('admin_level');
+    Security::checkAuthority('user_level');
+    $userphoto = "";
 
     $photos = new Photo("","","","","","","");
 // gets user by id
-    if (isset($_GET['pNo'])) {
-        $user = UsersController::getUserById($_GET['pNo']);
+    if (isset($_SESSION['user_id'])) {
+        $user = UsersController::getUserById($_SESSION['user_id']);
         $userphoto = $user->getProfile_image();
     }
 // Gets all photos
-    if (isset($_GET['pNo'])) {
-        $photos = PhotoController::getAllPhotosByUser($_GET['pNo']);
+    if (isset($_SESSION['user_id'])) {
+        $photos = PhotoController::getAllPhotosByUser($_SESSION['user_id']);
         $photo_categories = PhotoCategoryController::getAllPhotoCategory();
     }
 
@@ -30,32 +31,27 @@ if (isset($_POST['delete'])) {
         if (file_exists($delete_image_url)){
             unlink($delete_image_url);
             PhotoController::deletePhoto($_POST['photoDeleteNo']);
-            header('Location: ' . $_SERVER['PHP_SELF'] . "?pNo=" . $_GET['pNo']);
+            header('Location: ' . $_SERVER['PHP_SELF'] . "?pNo=" . $_SESSION['user_id']);
             exit();
         } else {
             $delete_error = "<h4 style='color: red;'>Delete Error Your Photo Did Not Delete</h4>";
         }
     }
 }
-// updates user
-if (isset($_POST['update'])){
-    if (isset($_POST['categoryUpdateNo'])){
-        header('Location: ./admin_manage_category_add_update.php?pNo=' . $_POST['categoryUpdateNo']);
-    }
-}
+
 
 if(isset($_POST['addPhoto'])){
-    header("Location: admin_add_photo.php?pNo=" . $_GET['pNo']);
+    header("Location: user_add_photo.php");
 }
 ?>
 
 <html>
-    <?php require_once("admin_nav_bar.php"); ?>
+    <?php require_once("user_nav_bar.php"); ?>
     <form method="post">
         <input type="submit" name="addPhoto" value="Add Photo" >
     </form>
-
-    <img src=<?php echo $userphoto ?> alt="User Photo">
+    <h1>My Photos</h1>
+    <img src=<?php echo 'images/' . $userphoto ?> alt="User Photo">
     <?php  ?>
     <div class="container text-center">
   <div class="row row-cols-4">
@@ -63,8 +59,8 @@ if(isset($_POST['addPhoto'])){
         <div class="col">
             <form method="post">
                 <input type="hidden" name="photo_url" value="<?php echo $photo->getPhoto_url()?>">
-                <a href="<?php echo "admin_update_single_photo.php?q=SinglePhoto&ID_photo=" . 
-                    $photo->getId_photo() . "&IDUser=" . $user->getId_user()?>">
+                <a href="<?php echo "user_view_one_photo.php?ID_photo=" . 
+                    $photo->getId_photo() ?>">
                     
                     <img src=<?php echo "images\\" . $photo->getPhoto_url()?>>
                 </a>

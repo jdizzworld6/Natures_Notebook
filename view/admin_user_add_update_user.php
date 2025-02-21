@@ -1,5 +1,4 @@
 <?php
-    session_start();
     require_once '../utilities/security.php';
     require_once '../controller/users.php';
     require_once '../controller/users_controller.php';
@@ -24,6 +23,25 @@ if (isset($_GET['pNo'])) {
     $user = UsersController::getUserById($_GET['pNo']);
     $pageTitle = 'Update an Existing User';
 }
+
+if (isset($_POST['save'])){
+    $fileName = $_FILES['myFile']['name'];
+    $randomNumber = rand(1, 999999999);
+    // imports and renames image file to prevent duplication
+        // -------------start here with pass checker ----------
+    if ($fileName !== "") {
+            $newImageName = $_GET['pNo'] . "_" . $randomNumber . "_" . $fileName;
+            $target = $dir . $newImageName;
+            move_uploaded_file($_FILES['myFile']['tmp_name'], $target);
+
+            ImageUtilities::ProcessImage($target);
+
+            $didrename = rename($dir . $fileName, $dir . $newImageName);
+    } 
+}
+// add image file to user
+            
+
 // Saves user details
 if (isset($_POST['save'])){
 
@@ -31,6 +49,9 @@ if (isset($_POST['save'])){
 
     $user->setId_user($_POST['id_user']);
 
+    if ($newImageName !== "") {
+        $user->setPhone_number($newImageName);
+    } 
 
 // Decides to add or update user
     if ($passAllInputBoxTest == true) {
@@ -41,23 +62,44 @@ if (isset($_POST['save'])){
             UsersController::updateUser($user);
     }
 // redirects page after post
+    if ($_SESSION['admin_level'] == true){
         header('Location: ./admin_manage_users.php');
+    } else
+        header('Location: ./user_friends_photos.php?pNo=' . $user->getId_user());
     }
 }
 // redirects page doesn't update
     if (isset($_POST['cancel'])){
+        if ($_SESSION['admin_level'] == true){
             header('Location: ./admin_manage_users.php');
+        } else
+            header('Location: ./user_friends_photos.php?pNo=' . $user->getId_user());
     }
+
+    if (isset($_POST['add_photo'])){
+        if (isset($_GET['pNo'])){
+        header("Location: ./admin_add_profile_photo.php?pNo=" . $_GET['pNo']);
+    } else {
+        header("Location: ./admin_add_profile_photo.php");
+    }
+}
+
 ?>
 
 <html>
-    <?php require_once("admin_nav_bar.php"); ?>
 
+    <?php 
+    if ($_SESSION['admin_level'] == true){
+        require_once("admin_nav_bar.php");
+    } else {
+        require_once("user_nav_bar.php");
+    } ?>
     <h2><?php echo $pageTitle ?></h2>
+    <img src="<?php echo 'images/' . $user->getProfile_image(); ?>" alt="">
     <form method="post">
+    <input type="submit" value="Add Photo" name="add_photo">
     <input type="hidden" name="id_user" value="<?php echo $user->getId_user(); ?>">
-    <h2>User ID: <input type="text" name="id_user" value="<?php echo $user->getId_user(); ?>">
-    </h2>
+    
     <h2>First Name: <input type="text" name="first_name" value="<?php echo $user->getFirst_name(); ?>">
         <?php echo (isset($_POST['save']) ? $firstNameTestReturn : '') ?>
     </h2>

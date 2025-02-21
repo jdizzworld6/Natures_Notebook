@@ -1,9 +1,8 @@
 <!-- Nav bar for all admin pages -->
 <?php
-  session_start();
+
 
   Security::checkHTTPS();
-
 
  if (!isset($_SESSION['admin_level'])){
     $_SESSION['admin_level'] = false;
@@ -15,7 +14,6 @@
   if (isset($_POST['logout'])){
       Security::logout();
       header("Location: login_page.php");
-
   }
 
   if (isset($_POST['login'])){
@@ -42,20 +40,23 @@ echo '
 
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
   <div class="container-fluid">
-    <a class="navbar-brand" href="admin_manage_users.php"">Users Account</a>
+    <a class="navbar-brand" href="user_manage_account.php"">My Account</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="admin_user_add_update_user.php">Add User</a>
+          <a class="nav-link active" aria-current="page" href="user_find_friends.php">Find Friends</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="admin_manage_category.php">Categories</a>
+          <a class="nav-link active" aria-current="page" href="user_my_friends.php">My Friends</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="admin_manage_category_add_update.php">Add Category</a>
+          <a class="nav-link active" aria-current="page" href="user_all_photos.php">My Photos</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="user_friends_photos.php">Friends Photos</a>
         </li>
       </ul>
     </div>

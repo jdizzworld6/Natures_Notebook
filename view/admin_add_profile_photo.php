@@ -8,7 +8,10 @@
     require_once '../controller/photo.php';
     require_once '../controller/photo_controller.php';
     require_once '../controller/image_utilities.php';
-    require_once '../controller/inputBoxErrorHandlerPhotoAdd.php';
+
+
+    Security::checkHTTPS();
+    Security::checkAuthority('admin_level');
     
     $dir = "C:\\xampp\htdocs\Natures_Notebook-1/view/images/";
     $displayImage = "style='display: none;'";
@@ -23,24 +26,25 @@ if (isset($_POST['save'])){
 // imports and renames image file to prevent duplication
     if ($fileName !== ""){
         // -------------start here with pass checker ----------
-        if ($passAllInputBoxTest) {
+
             $newImageName = $_GET['pNo'] . "_" . $randomNumber . "_" . $fileName;
             $target = $dir . $newImageName;
             move_uploaded_file($_FILES['myFile']['tmp_name'], $target);
 
-            $result = ImageUtilities::ProcessImage($target);
+            ImageUtilities::ProcessImage($target);
 
             $didrename = rename($dir . $fileName, $dir . $newImageName);
     // add image file to user
-            $photo = new Photo((int)$_GET['pNo'], (int)$_POST['photo_category'],$_POST['name'],$_POST['description'], $newImageName, $_POST['date_found'], $_POST['location']);
-    
-            PhotoController::addPhoto($photo);
+
+            $user = UsersController::getUserById($_GET['pNo']);
+
+            $userUpdate = new User( $user->getFirst_name(), $user->getLast_name(), $newImageName, $user->getDate_of_birth(), $user->getPhone_number(), $user->getAddress(), $user->getCity(), $user->getState(), $user->getZip(), $user->getEmail(), $user->getUsername(), $user->getPassword(), $newImageName, $user->getCountCreated(), $user->getId_user(),);
+
+            UsersController::updateUser($userUpdate);
     
             $imgName='';
         
-            header('Location: ./admin_user_photos.php?pNo=' . $_GET['pNo']);
-
-        }
+            header('Location: ./admin_user_add_update_user.php?pNo=' . $_GET['pNo']);
 
     } else {
         $FileError = "<h4 style='color: red'> Need to select a file. </h4>";
@@ -48,45 +52,18 @@ if (isset($_POST['save'])){
 }
 
 if (isset($_POST['cancel'])){
-    header('Location: ./admin_user_photos.php?pNo=' . $_GET['pNo']);
+    header('Location: ./admin_user_add_update_user.php?pNo=' . $_GET['pNo']);
 }
 
 ?>
 <html>
 <?php require_once("admin_nav_bar.php"); ?>
-<h1>Add New Entry</h1>
-    <h2>Photo:</h2>
+<h1>Add Profile Image</h1>
     <br>
 
     <form method="post" enctype="multipart/form-data">
         <input type="file" name="myFile" id="myFile" >
         <?php echo (isset($_POST['save']) ? $FileError: '') ?>
-        <br>
-        <label for="name">Name/Species:</label>
-        <br>
-        <input type="text" name="name">
-            <?php echo (isset($_POST['save']) ? $photoNameTestReturn: '') ?>
-        <br>
-        <label for="category">Category</label>
-        <br>
-        <select name="photo_category">
-            <?php foreach(PhotoCategoryController::getAllPhotoCategory() as $category) : ?>
-                <option value="<?php echo $category->getIdPhotoCategory() ?>"><?php echo $category->getCategoryName() ?></option>
-            <?php endforeach ?>
-        </select>
-        <?php echo (isset($_POST['save']) ? $categorySelectReturn: '') ?>
-        <br>
-        <label for="date_found">Date Found:</label>
-        <br>
-        <input type="date" name="date_found" value="<?php echo date('Y-m-d'); ?>">
-        <br>
-        <label for="location">Location:</label>
-        <br>
-        <input type="text" name="location">
-        <br>
-        <label for="description">Description:</label>
-        <br>
-        <textarea name="description" cols="75" rows="10"></textarea>
         <br>
         <input type="submit" name="save" value="Upload">
         <input type="submit" name="cancel" value="Cancel">

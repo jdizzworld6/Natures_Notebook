@@ -1,23 +1,3 @@
-<?php
-
-    require_once 'utilities\security.php';
-    require_once  'controller\users_controller.php';
-    require_once 'controller\users.php'; 
-
-    Security::checkHTTPS();
-
-    $login_message = isset($_SESSION['log_message']) ? $_SESSION['log_message'] : '';
-// allws user to login check credentials
-    if (isset($_POST['logID']) & isset($_POST['password'])){
-      $userLevel = UsersController::validUser($_POST['logID'], $_POST['password']);
-      Security::setUserLevelSession($userLevel);
-      $login_message = $_SESSION['log_message'];
-    }
-
-?>
-
-<!-- <a href="view\login_page.php">Index</a> -->
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -25,24 +5,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nature's Notebook Homepage</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link rel="stylesheet" href="view/styles.css">
+    <link rel="stylesheet" href="styles.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </head>
 <body>
     <h1>Welcome to Nature's Notebook!</h1>
-    <img src="view\imagesWebpage\venusFlytrap.png" alt="venusFlytrap" width="250" height="200" >
-    <img src="view\imagesWebpage\bluejay.png" alt="bluejay" width="250" height="200">
-    <img src="view\imagesWebpage\racoon.png" alt="racoon" width="250" height="200">
-    <img src="view\imagesWebpage\redmushroom.png" alt="redmushroom" width="250" height="200">
-    <img src="view\imagesWebpage\naturalbridge.png" alt="naturalbridge" width="260" height="200">
-    <img src="view\imagesWebpage\rhinobeetle.png" alt="rhinobeetle" width="230" height="200">
+    <img src="venusFlytrap.png" alt="venusFlytrap" width="250" height="200" >
+    <img src="bluejay.png" alt="bluejay" width="250" height="200">
+    <img src="racoon.png" alt="racoon" width="250" height="200">
+    <img src="redmushroom.png" alt="redmushroom" width="250" height="200">
+    <img src="naturalbridge.png" alt="naturalbridge" width="260" height="200">
+    <img src="rhinobeetle.png" alt="rhinobeetle" width="230" height="200">
    </h1>
     <h2>Already a member? Sign in here</h2>
-
-    <a href="view\login_page.php" >
-      <button>Log In</button>
-    </a>
-
+    <form>
+        <div class="mb-3">
+          <label for="exampleInputEmail1" class="form-label">Email address</label>
+          <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+        </div>
+        <div class="mb-3">
+          <label for="exampleInputPassword1" class="form-label">Password</label>
+          <input type="password" class="form-control" id="exampleInputPassword1">
+        </div>
+        </div>
+        <button type="submit" class="btn btn-secondary btn-lg">Sign In</button>
+      </form>
       <h3>Still need to start your adventure? Click below to Create and Account:</h3>
       <button type="button" class="btn btn-secondary btn-lg">Create Account</button>
       <button type="button" class="btn btn-secondary btn-lg">Update Exsisting Account</button>
@@ -52,6 +39,8 @@
         This website is meant to be your own personal wildlife journal. Happy exploring! 
       </p>
       
+      
+
     
 </body>
 

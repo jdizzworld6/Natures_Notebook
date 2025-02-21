@@ -52,16 +52,17 @@ if (isset($_POST['save'])){
 
     $passAllInputBoxTest= false;
 
-    $photoNameTest = new inputBoxErrorHandler(isset($_POST['fileUpload']), $_POST['name'], 4, "Photo Name is required");
+    $photoNameTest = new inputBoxErrorHandler(isset($_POST['save']), $_POST['name'], 4, "Photo Name is required");
 
     $photoNameTestReturn = $photoNameTest->testInputBox();
 
-    $categorySelect = new inputBoxErrorHandler(isset($_POST['fileUpload']), $_POST["photo_category"],20, "Need to select category.");
+    $categorySelect = new inputBoxErrorHandler(isset($_POST['save']), $_POST["photo_category"],20, "Need to select category.");
 
     $categorySelectReturn = $categorySelect->testCategorySelect();
 
-    if ($photoNameTestReturn == "" && $categorySelectReturn = "") {
+    if ($photoNameTestReturn == "" && $categorySelectReturn == "") {
         $passAllInputBoxTest = true;
     }
+    $test = '';
 
  }

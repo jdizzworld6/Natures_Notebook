@@ -9,6 +9,9 @@
     require_once '../controller/photo_controller.php';
     require_once '../controller/image_utilities.php';
     require_once '../controller/inputBoxErrorHandlerPhotoAdd.php';
+
+    Security::checkHTTPS();
+    Security::checkAuthority('user_level');
     
     $dir = "C:\\xampp\htdocs\Natures_Notebook-1/view/images/";
     $displayImage = "style='display: none;'";
@@ -24,21 +27,21 @@ if (isset($_POST['save'])){
     if ($fileName !== ""){
         // -------------start here with pass checker ----------
         if ($passAllInputBoxTest) {
-            $newImageName = $_GET['pNo'] . "_" . $randomNumber . "_" . $fileName;
+            $newImageName = $_SESSION['user_id'] . "_" . $randomNumber . "_" . $fileName;
             $target = $dir . $newImageName;
             move_uploaded_file($_FILES['myFile']['tmp_name'], $target);
 
-            $result = ImageUtilities::ProcessImage($target);
+            ImageUtilities::ProcessImage($target);
 
             $didrename = rename($dir . $fileName, $dir . $newImageName);
     // add image file to user
-            $photo = new Photo((int)$_GET['pNo'], (int)$_POST['photo_category'],$_POST['name'],$_POST['description'], $newImageName, $_POST['date_found'], $_POST['location']);
+            $photo = new Photo((int)$_SESSION['user_id'], (int)$_POST['photo_category'],$_POST['name'],$_POST['description'], $newImageName, $_POST['date_found'], $_POST['location']);
     
             PhotoController::addPhoto($photo);
     
             $imgName='';
         
-            header('Location: ./admin_user_photos.php?pNo=' . $_GET['pNo']);
+            header('Location: ./user_all_photos.php');
 
         }
 
@@ -48,14 +51,13 @@ if (isset($_POST['save'])){
 }
 
 if (isset($_POST['cancel'])){
-    header('Location: ./admin_user_photos.php?pNo=' . $_GET['pNo']);
+    header('Location: ./user_all_photos.php');
 }
 
 ?>
 <html>
-<?php require_once("admin_nav_bar.php"); ?>
-<h1>Add New Entry</h1>
-    <h2>Photo:</h2>
+<?php require_once("user_nav_bar.php"); ?>
+<h1>Add New Photo</h1>
     <br>
 
     <form method="post" enctype="multipart/form-data">
