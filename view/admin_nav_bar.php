@@ -1,7 +1,7 @@
 <!-- Nav bar for all admin pages -->
 <?php
-  session_start();
-
+error_reporting(0);
+session_start();
   Security::checkHTTPS();
 
 

@@ -26,7 +26,8 @@ if (isset($_SESSION['user_id'])) {
 // Saves user details
 if (isset($_POST['save'])){
 
-    $user = new User($_POST['first_name'], $_POST['last_name'], "", $_POST['date_of_birth'], $_POST['phone_number'], $_POST['address'], $_POST['city'], $_POST['state'], $_POST['zip'], $_POST['email'], $_POST['username'], $_POST['password'], $_POST['user_level'], "", $_POST['id_user']);
+    $user = new User($_POST['first_name'], $_POST['last_name'], $_POST['date_of_birth'], $_POST['phone_number'], $_POST['address'], $_POST['city'], $_POST['state'], $_POST['zip'], $_POST['email'], $_POST['username'], $_POST['password'], $_POST['user_level'], "", $_POST['id_user']);
+
 
     $user->setId_user($_POST['id_user']);
 
@@ -47,7 +48,7 @@ if (isset($_POST['save'])){
 <html>
 
     <?php require_once("user_nav_bar.php");?>
-    <a href="user_add_profile_photo.php" target="_blank">
+    <a href="user_add_profile_photo.php">
         <button>Add Profile Photo</button>
     </a>
     
@@ -86,11 +87,11 @@ if (isset($_POST['save'])){
     <h2>User Name: <input type="text" name="username" value="<?php echo $user->getUsername(); ?>">
         <?php echo (isset($_POST['save']) ? $usernameTestReturn : '') ?>
     </h2>
-    <h2>Password: <input type="text" name="password" value="<?php echo $user->getPassword(); ?>">
+    <h2>Password: <input type="password" name="password" value="<?php echo $user->getPassword(); ?>">
         <?php echo (isset($_POST['save']) ? $passwordTestReturn : '') ?>
     </h2>
 
-    <h2>User Level:</h2> <select name="user_level">
+    <h2 style="display: none;">User Level:</h2> <select style="display: none;" name="user_level">
         <option value="0">Select User Level</option>
         <option value="1" <?php echo ($user->getUserLevel()==1) ? 'selected' : ''?> >Administrator</option>
         <option value="2"<?php echo ($user->getUserLevel()==2) ? 'selected' : ''?>>Customer</option>

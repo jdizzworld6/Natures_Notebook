@@ -10,12 +10,16 @@
 // allws user to login check credentials
     if (isset($_POST['logID']) & isset($_POST['password'])){
       $user = UsersController::validUser($_POST['logID'], $_POST['password']);
+    if ($user == false){
+        $error_message = "<h4 style = 'color: red'>Username or Password Incorrect.</h4>";
+      } else {
       $userLevel = $user->getUserLevel();
       $userNo = $user->getId_user();
       Security::setUserLevelSession($userLevel, $userNo);
       if ($_SESSION['log_message']){
         $error_message = "<h4 style = 'color: red'>".$_SESSION['log_message']."</h4>";
       }
+    }
     }
 ?>
 <!DOCTYPE html>

@@ -26,7 +26,7 @@
         $friends = FriendsController::getAllFriends($_SESSION['user_id']);
 
         foreach ($friends as $friend) {
-            $friend_photos = PhotoController::getAllPhotosByUser($friend->getIdFriends());
+            $friend_photos = PhotoController::getAllPhotosByUser($friend->getIdYourFriends());
 
             foreach ($friend_photos as $photo) {
                 // create an object that holds the friend and photo information
@@ -67,7 +67,10 @@
             <input type="text" name="photo_first_name" value="<?php echo $my_friend['first_name']?>">
             <input type="text" name="photo_last_name" value="<?php echo $my_friend['last_name']?>">
                 <input type="hidden" name="photo_url" value="<?php echo $my_friend['id_user']?>">
+            <a href="<?php echo "user_view_one_friends_photo.php?ID_photo=" .
+                    $my_friend['id_photo'] ?>">
                     <img src=<?php echo "images\\" . $my_friend['photo_url']?>>
+                </a>
                 <br>
                 <br>
                 <label for="name">Photo Name:</label>

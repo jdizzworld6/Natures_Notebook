@@ -11,7 +11,6 @@ class UsersController {
         $users = new User(
             $row['first_name'],
             $row['last_name'],
-            $row['profile_image'],
             $row['date_of_birth'],
             $row['phone_number'],
             $row['address'],
@@ -23,6 +22,7 @@ class UsersController {
             $row['password'],
             $row['user_level'],
             $row['count_created'],
+            $row['profile_image'],
             $row['id_user']
         );
         return $users;
@@ -83,7 +83,6 @@ class UsersController {
             $user->getId_user(),
             $user->getFirst_name(),
             $user->getLast_name(),
-            $user->getProfile_image(),
             $user->getDate_of_birth(),
             $user->getPhone_number(),
             $user->getAddress(),
@@ -93,6 +92,12 @@ class UsersController {
             $user->getEmail(),
             $user->getUsername(),
             $user->getPassword()
+        );
+    }
+    public static function updateUserProfileImage($id_user, $profile_image){
+        return UsersDB::updateProfilePhoto(
+            $id_user,
+            $profile_image
         );
     }
     // validate user by username and password

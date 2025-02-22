@@ -36,11 +36,8 @@ if (isset($_POST['save'])){
             $didrename = rename($dir . $fileName, $dir . $newImageName);
     // add image file to user
 
-            $user = UsersController::getUserById($_GET['pNo']);
 
-            $userUpdate = new User( $user->getFirst_name(), $user->getLast_name(), $newImageName, $user->getDate_of_birth(), $user->getPhone_number(), $user->getAddress(), $user->getCity(), $user->getState(), $user->getZip(), $user->getEmail(), $user->getUsername(), $user->getPassword(), $newImageName, $user->getCountCreated(), $user->getId_user(),);
-
-            UsersController::updateUser($userUpdate);
+            UsersController::updateUserProfileImage($_GET['pNo'], $newImageName);
     
             $imgName='';
         
@@ -57,12 +54,15 @@ if (isset($_POST['cancel'])){
 
 ?>
 <html>
+<script src="view\temp_view_photo.js"></script>
 <?php require_once("admin_nav_bar.php"); ?>
 <h1>Add Profile Image</h1>
     <br>
 
     <form method="post" enctype="multipart/form-data">
-        <input type="file" name="myFile" id="myFile" >
+    <input type="file" name="myFile" id="file-upload" accept="image/*" onchange="previewImage(event);">
+        <br>
+        <img id="imagePreview" src="#" alt="Image Preview" style="max-width: 300px; max-height: 300px;">
         <?php echo (isset($_POST['save']) ? $FileError: '') ?>
         <br>
         <input type="submit" name="save" value="Upload">

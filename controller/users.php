@@ -18,7 +18,7 @@ class User{
     private $count_created;
 
 // creating a user class with user information
-    public function __construct($first_name, $last_name, $profile_image, $date_of_birth, $phone_number, $address, $city, $state, $zip, $email, $username, $password, $user_level, $count_created ,$id_user=null){
+    public function __construct($first_name, $last_name, $date_of_birth, $phone_number, $address, $city, $state, $zip, $email, $username, $password, $user_level, $count_created ,$profile_image = null, $id_user=null){
         $this->first_name = $first_name;
         $this->last_name = $last_name;
         $this->profile_image = $profile_image;

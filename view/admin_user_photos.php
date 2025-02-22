@@ -1,5 +1,5 @@
 <?php
-    session_start();
+session_start();
     require_once '../utilities/security.php';
     require_once '../controller/users_controller.php';
     require_once '../controller/users.php';

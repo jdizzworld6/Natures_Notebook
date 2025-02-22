@@ -56,12 +56,15 @@ if (isset($_POST['cancel'])){
 
 ?>
 <html>
+<script src="view\temp_view_photo.js"></script>
 <?php require_once("user_nav_bar.php"); ?>
 <h1>Add New Photo</h1>
     <br>
 
     <form method="post" enctype="multipart/form-data">
-        <input type="file" name="myFile" id="myFile" >
+    <input type="file" name="myFile" id="file-upload" accept="image/*" onchange="previewImage(event);">
+        <br>
+        <img id="imagePreview" src="#" alt="Image Preview" style="max-width: 300px; max-height: 300px;">
         <?php echo (isset($_POST['save']) ? $FileError: '') ?>
         <br>
         <label for="name">Name/Species:</label>

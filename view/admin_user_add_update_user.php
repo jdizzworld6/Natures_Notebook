@@ -24,34 +24,34 @@ if (isset($_GET['pNo'])) {
     $pageTitle = 'Update an Existing User';
 }
 
-if (isset($_POST['save'])){
-    $fileName = $_FILES['myFile']['name'];
-    $randomNumber = rand(1, 999999999);
-    // imports and renames image file to prevent duplication
-        // -------------start here with pass checker ----------
-    if ($fileName !== "") {
-            $newImageName = $_GET['pNo'] . "_" . $randomNumber . "_" . $fileName;
-            $target = $dir . $newImageName;
-            move_uploaded_file($_FILES['myFile']['tmp_name'], $target);
+// if (isset($_POST['save'])){
+//     $fileName = $_FILES['myFile']['name'];
+//     $randomNumber = rand(1, 999999999);
+//     // imports and renames image file to prevent duplication
+//         // -------------start here with pass checker ----------
+//     if ($fileName !== "") {
+//             $newImageName = $_GET['pNo'] . "_" . $randomNumber . "_" . $fileName;
+//             $target = $dir . $newImageName;
+//             move_uploaded_file($_FILES['myFile']['tmp_name'], $target);
 
-            ImageUtilities::ProcessImage($target);
+//             ImageUtilities::ProcessImage($target);
 
-            $didrename = rename($dir . $fileName, $dir . $newImageName);
-    } 
-}
+//             $didrename = rename($dir . $fileName, $dir . $newImageName);
+//     } 
+// }
 // add image file to user
             
 
 // Saves user details
 if (isset($_POST['save'])){
 
-    $user = new User($_POST['first_name'], $_POST['last_name'], "", $_POST['date_of_birth'], $_POST['phone_number'], $_POST['address'], $_POST['city'], $_POST['state'], $_POST['zip'], $_POST['email'], $_POST['username'], $_POST['password'], $_POST['user_level'], "", $_POST['id_user']);
+    $user = new User($_POST['first_name'], $_POST['last_name'], $_POST['date_of_birth'], $_POST['phone_number'], $_POST['address'], $_POST['city'], $_POST['state'], $_POST['zip'], $_POST['email'], $_POST['username'], $_POST['password'], $_POST['user_level'], "", $_POST['id_user']);
 
     $user->setId_user($_POST['id_user']);
 
-    if ($newImageName !== "") {
-        $user->setPhone_number($newImageName);
-    } 
+    // if ($newImageName !== "") {
+    //     $user->setPhone_number($newImageName);
+    // } 
 
 // Decides to add or update user
     if ($passAllInputBoxTest == true) {

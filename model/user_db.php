@@ -48,13 +48,13 @@ class UsersDB {
         }
     }
     // Query for adding new user into database
-    public static function addUser($first_name, $last_name, $profile_image, $date_of_birth, $phone_number, $address, $city, $state, $zip, $email, $username, $password, $user_level = 2) {
+    public static function addUser($first_name, $last_name, $date_of_birth, $phone_number, $address, $city, $state, $zip, $email, $username, $password, $user_level = 2) {
         $db = new Database();
         $dbConn = $db->getDbConn();
         $count_created = date('m/d/Y H:i:s');
 
         if ($dbConn) {
-            $query = "Insert Into users (first_name, last_name, profile_image, date_of_birth, phone_number, address, city, state, zip, email, username, password, user_level, count_created) Values ('" . $first_name . "', '" . $last_name . "', '" . $profile_image . "', '" . $date_of_birth . "', '" . $phone_number . "', '" . $address . "', '" . $city . "', '" . $state . "', '" . $zip . "', '" . $email . "', '" . $username . "', '" . $password . "', '" . $user_level . "', '" . $count_created . "')";
+            $query = "Insert Into users (first_name, last_name, profile_image, date_of_birth, phone_number, address, city, state, zip, email, username, password, user_level, count_created) Values ('" . $first_name . "', '" . $last_name . "', '" . $date_of_birth . "', '" . $phone_number . "', '" . $address . "', '" . $city . "', '" . $state . "', '" . $zip . "', '" . $email . "', '" . $username . "', '" . $password . "', '" . $user_level . "', '" . $count_created . "')";
 
             return $dbConn->query($query) === true;
         } else {
@@ -62,13 +62,12 @@ class UsersDB {
         }
     }
     // Query for updating existing user in database 
-    public static function updateUser($id_user, $first_name, $last_name, $profile_image, $date_of_birth, $phone_number, $address, $city, $state, $zip, $email, $username, $password) {
+    public static function updateUser($id_user, $first_name, $last_name, $date_of_birth, $phone_number, $address, $city, $state, $zip, $email, $username, $password) {
         $db = new Database();
         $dbConn = $db->getDbConn();
         if ($dbConn) {
             $query = "Update users Set first_name = '$first_name',
                 last_name = '$last_name',
-                profile_image = '$profile_image',
                 date_of_birth = '$date_of_birth',
                 phone_number = '$phone_number',
                 address = '$address',
@@ -79,6 +78,17 @@ class UsersDB {
                 username = '$username',
                 password = '$password' Where id_user = $id_user";
             
+            return $dbConn->query($query) === true;
+        } else {
+            return false;
+        }
+    }
+
+    public static function updateProfilePhoto($id_user, $profile_image){
+        $db = new Database();
+        $dbConn = $db->getDBConn();
+        if ($dbConn) {
+            $query = "Update users Set profile_image = '$profile_image' Where id_user = $id_user";
             return $dbConn->query($query) === true;
         } else {
             return false;
