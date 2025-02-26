@@ -14,7 +14,7 @@ session_start();
 
   if (isset($_POST['logout'])){
       Security::logout();
-      header("Location: login_page.php");
+      header("Location: ../index.php");
 
   }
 

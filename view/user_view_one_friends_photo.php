@@ -25,6 +25,7 @@ if (isset($_SESSION['user_id'])) {
 if (isset($_GET['ID_photo'])) {
     $photo = PhotoController::getPhotoById($_GET['ID_photo']);
     $photo_categories = PhotoCategoryController::getAllPhotoCategory();
+    $friend = UsersController::getUserById($_GET['ID_friend']);
 }
 
 // reformate upload date and have calander
@@ -42,53 +43,51 @@ if (isset($_POST['update_photo'])){
 if (isset($_POST['all_photos'])){
     header('Location: ./user_friends_photos.php');
 }
-
-
 ?>
 
 <html>
     <?php require_once("user_nav_bar.php"); ?>
+<div class="container text-center mt-5">
+    <div class="row pt-5">
+        <h1>
+            <img src="<?php echo $friend->getProfile_image() ?>" id="profile_image" alt="">
+            <?php echo $friend->getFirst_name() . " " . $friend->getLast_name();?> Photo
+        </h1>
+    </div>
+    <div class="row mt-3">
+        <div class="col">
+            <img src=" <?php echo "images\\" . $photo->getPhoto_url() ?>" id="regular_photos" alt="">
+        </div>
+    </div>
+    <div class="row mt-3">
+        <div class="col">
+            <h3>Name/Secies: <?php echo $photo->getPhoto_name() ?> </h3>
+        </div>
+    </div>
+    <div class="row mt-3">
+        <div class="col">
+            <h3>Category: <?php $myCategory = PhotoCategoryController::getCategoryById($photo->getId_photo_category()); 
+            echo $myCategory->getCategoryName(); ?></h3>
+        </div>
+    </div>
+    <div class="row mt-3">
+        <div class="col">
+            <h3>Date: <?php echo date("m-d-Y",strtotime($photo->getUpload_date())); ?></h3>
+        </div>
+    </div>
+    <div class="row mt-3">
+        <div class="col">
+            <h3>Location: <?php echo $photo->getLocation() ?></h3>
+        </div>
+    </div>
+    <div class="row mt-3">
+        <div class="col">
+            <h3>Description: </h3>
+            <p><?php echo $photo->getDescription() ?></p>
+        </div>
+    </div>
 
-    <form method="post">
-        <img src=" <?php echo "images\\" . $photo->getPhoto_url() ?>" alt="">
-        <br>
-        <label for="photo_name">Name:/Species</label>
-        <br>
-        <input readonly type="text" value="<?php echo $photo->getPhoto_name() ?>" name="photo_name">
-        <br>
-        <label for="photo_category">Category</label>
-        <br>
-        <select disabled name="photo_category">
-
-            <?php foreach($photo_categories as $category) :
-                if ($photo->getId_photo_category()==$category->getIdPhotoCategory()){ ?>
-                    <?php $selectedOption = '<option value ="' . $category->getIdPhotoCategory() . '"selected>' . $category->getCategoryName() . '</option>' ;
-                    echo $selectedOption;
-                    ?>
-                <?php } else { ?>
-                    <option value="<?php echo $category->getIdPhotoCategory() ?>"><?php echo $category->getCategoryName()?></option>
-                <?php }  ?>
-            <?php endforeach ?>
-        </select>
-        <br>
-        <label for="date_uploaded">Date Found:</label>
-        <br>
-        
-        <input readonly name="upload_date" value="<?php echo date("Y-m-d",strtotime($photo->getUpload_date())); ?>" type="date">
-        <br>
-        <label for="location">Location:</label>
-        <br>
-        <input readonly name="location" value="<?php echo $photo->getLocation() ?>" type="text">
-        <br>
-        <label for="description">Description:</label>
-        <br>
-        <textarea readonly name="description" rows="10" cols="75" id="">
-        <?php echo $photo->getDescription() ?>
-        </textarea>
-        <br>
-        <input type="submit" name="all_photos" value="Friends Photos">
-    
-    </form>
+</div>
 
 
 

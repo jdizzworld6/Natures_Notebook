@@ -22,6 +22,7 @@ class UsersDB {
     public static function getAllUsers($id_user = null){
         $db = new Database();
         $dbConn = $db->getDBConn();
+        $id_user = (int)$id_user;
         
         if ($dbConn){
             if ($id_user != null){
@@ -39,6 +40,7 @@ class UsersDB {
     public static function deleteUser($id_user){
         $db = new Database();
         $dbConn = $db->getDBConn();
+        $id_user = (int)$id_user;
         if($dbConn){
             $query = "Delete From users Where id_user = $id_user";
 
@@ -54,7 +56,20 @@ class UsersDB {
         $count_created = date('m/d/Y H:i:s');
 
         if ($dbConn) {
-            $query = "Insert Into users (first_name, last_name, profile_image, date_of_birth, phone_number, address, city, state, zip, email, username, password, user_level, count_created) Values ('" . $first_name . "', '" . $last_name . "', '" . $date_of_birth . "', '" . $phone_number . "', '" . $address . "', '" . $city . "', '" . $state . "', '" . $zip . "', '" . $email . "', '" . $username . "', '" . $password . "', '" . $user_level . "', '" . $count_created . "')";
+            $query = "Insert Into users (first_name, last_name, date_of_birth, phone_number, address, city, state, zip, email, username, password, profile_image, user_level, count_created) Values ('$first_name',
+                '$last_name',
+                '$date_of_birth',
+                '$phone_number',
+                '$address',
+                '$city',
+                '$state',
+                '$zip',
+                '$email',
+                '$username',
+                '$password',
+                '',
+                $user_level,
+                '$count_created')";
 
             return $dbConn->query($query) === true;
         } else {
@@ -65,6 +80,7 @@ class UsersDB {
     public static function updateUser($id_user, $first_name, $last_name, $date_of_birth, $phone_number, $address, $city, $state, $zip, $email, $username, $password) {
         $db = new Database();
         $dbConn = $db->getDbConn();
+        $id_user = (int)$id_user;
         if ($dbConn) {
             $query = "Update users Set first_name = '$first_name',
                 last_name = '$last_name',
@@ -87,6 +103,7 @@ class UsersDB {
     public static function updateProfilePhoto($id_user, $profile_image){
         $db = new Database();
         $dbConn = $db->getDBConn();
+        $id_user = (int)$id_user;
         if ($dbConn) {
             $query = "Update users Set profile_image = '$profile_image' Where id_user = $id_user";
             return $dbConn->query($query) === true;
@@ -105,6 +122,20 @@ class UsersDB {
         } else {
             return false;
         }
+    }
+
+    public static function getUserByUsernamePassword($userName, $password){
+        $db = new Database();
+        $dbConn = $db->getDBConn();
+
+        if ($dbConn){
+            $query = "Select * From users Where username = '$userName' and password = '$password'"; 
+            $result = $dbConn->query($query);
+            return $result->fetch_assoc();
+        } else {
+            return false;
+        }
+
     }
 
 }

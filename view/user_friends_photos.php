@@ -22,6 +22,14 @@
 // Gets all photos
     if (isset($_SESSION['user_id'])) {
         $friends_info = [];
+
+        $profile_image = $user->getProfile_image();
+
+        if (isset($profile_image)){
+            $profile_image = 'images/' . $profile_image;
+        } else {
+            $profile_image = '';
+        }
         
         $friends = FriendsController::getAllFriends($_SESSION['user_id']);
 
@@ -34,7 +42,7 @@
                 $photo_categories = PhotoCategoryController::getCategoryById($photo->getId_photo_category());
                 
                 $friends_info[] = array(
-                    'id_user' => $friend->getIdFriends(),
+                    'id_user' => $friend->getIdYourFriends(),
                     'first_name' => $friend->getFirstName(),
                     'last_name' => $friend->getLastName(),
                     'profile_image' => $friend->getProfileImage(),
@@ -54,38 +62,79 @@
 
 <html>
     <?php require_once("user_nav_bar.php"); ?>
-    <h1>My Friend Photos</h1>
-    <img src=<?php echo 'images/' . $user->getProfile_image() ?> alt="User Photo">
-    <?php  ?>
-    <div class="container text-center">
-  <div class="row row-cols-4">
-    <?php foreach ($friends_info as $my_friend) : ?>
-        <div class="col">
-            <form method="post">
-            <img src="<?php echo 'images/' . $my_friend['profile_image'] ?>" alt="">
-            <label for="name">Name:</label>
-            <input type="text" name="photo_first_name" value="<?php echo $my_friend['first_name']?>">
-            <input type="text" name="photo_last_name" value="<?php echo $my_friend['last_name']?>">
-                <input type="hidden" name="photo_url" value="<?php echo $my_friend['id_user']?>">
-            <a href="<?php echo "user_view_one_friends_photo.php?ID_photo=" .
-                    $my_friend['id_photo'] ?>">
-                    <img src=<?php echo "images\\" . $my_friend['photo_url']?>>
-                </a>
-                <br>
-                <br>
-                <label for="name">Photo Name:</label>
-                <input type="text" name="name" value="<?php echo $my_friend['photo_name'] ?>">
-                <br>
-                <label for="category">category</label>
-                <br>
-                <input type="text" name="category" value="<?php echo $my_friend['photo_category']?>">
-                <br>
-                <label for="txtdate">Date</label>
-                <input type="text" name="txtdate" value="<?php echo $my_friend['upload_date']?>">
-            </form>
+
+    <div class="container text-start mt-5">
+
+        <div class="row text-center pt-5">
+            <h2>
+                <img src=<?php echo $profile_image; ?> alt="User Photo" id="profile_image">
+                Welcome <?php echo $user->getFirst_name() . " " . $user->getLast_name(); ?>
+            </h2>
         </div>
+        <div class="row text-center">
+            <h1 class="my-3">Your Friends' Photos</h1>
+        </div>
+    </div>
+
+
+    <div class="container text-start">
+<div class="row">
+    <?php foreach ($friends_info as $my_friend) : ?>
+    <div class="col">
+        <form method="post">
+        <div class="row mt-4">
+            <img src="<?php echo 'images/' . $my_friend['profile_image'] ?>" id="profile_image">
+            <div class="col mt-4">
+                <h3>Name: <?php echo $my_friend['first_name']?> <?php echo $my_friend['last_name']?></h3>
+            </div>
+            <input type="hidden" name="photo_url" value="<?php echo $my_friend['id_user']?>">
+        </div>
+        <div class="row-4 mt-4">
+            <a href="<?php echo "user_view_one_friends_photo.php?ID_photo=" .
+                $my_friend['id_photo'] . "&ID_friend=" . $my_friend['id_user'] ?>">
+                <img src=<?php echo "images\\" . $my_friend['photo_url']?> id="regular_photos">
+            </a>
+        </div>
+        <div class="row-4">
+            <div class="col">
+                <h3>Photo Name: <?php echo $my_friend['photo_name'] ?></h3>
+            </div>
+        </div>
+        <div class="row-4">
+            <div class="col">
+                <h3>Category: <?php echo $my_friend['photo_category']?></h3>
+            </div>
+        </div>
+        <div class="row-4">
+            <div class="col">
+                <h3>Date: <?php 
+                $dateTimeString = $my_friend['upload_date']; // Your input date and time string
+
+                // Create a DateTime object from the input string:
+                $dateTime = DateTime::createFromFormat('Y-m-d H:i:s', $dateTimeString);
+                
+                if ($dateTime === false) {
+                    $dateTime = DateTime::createFromFormat('Y/m/d H:i:s', $dateTimeString);
+                    $formattedDate = $dateTime->format('m/d/Y');
+                    echo $formattedDate; // Output
+                } else {
+                    // Format the date to MM/DD/YYYY:
+                    $formattedDate = $dateTime->format('m/d/Y');
+                    echo $formattedDate; // Output
+                }
+
+  
+                ?></h3>
+            </div>
+        </div>
+    </div>
+    </form>
     <?php endforeach ?>
-  </div>
+    </div>
 </div>
+
+
+
+
 
 </html>

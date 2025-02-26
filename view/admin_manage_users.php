@@ -66,7 +66,13 @@
         <td><?php echo $user->getId_user()?></td>
         <td><?php echo $user->getFirst_name()?></td>
         <td><?php echo $user->getLast_name()?></td>
-        <td><?php echo $user->getProfile_image()?></td>
+        <td><?php 
+        if ($user->getProfile_image() == ""){
+            echo "false";
+        } else {
+            echo "true";
+        }
+        ?></td>
         <td><?php echo $user->getDate_of_birth()?></td>
         <td><?php echo $user->getPhone_number()?></td>
         <td><?php echo $user->getAddress()?></td>

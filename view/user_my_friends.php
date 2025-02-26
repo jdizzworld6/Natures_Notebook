@@ -28,42 +28,36 @@
 
     <?php require_once("user_nav_bar.php"); ?>
 
-    <body>
-<table class="table">
+<body>
 
+<div class="container pt-5">
+    <div class="row text-center pt-5">
+        <h1 class="mt-4">Your Friends</h1>
+    </div>
     <?php foreach (UsersController::getAllUsers($_SESSION['user_id']) as $user) : 
-
         $friendsStatus = FriendsController::getFiendStatus($_SESSION['user_id'],$user->getId_user());
-
         if ($friendsStatus == true) {
     ?>
-
-    
-    
-    <tr>
-        <td><?php echo $user->getFirst_name()?></td>
-        <td><?php echo $user->getLast_name()?></td>
-        <td>
-            <img src="<?php echo 'images/' . $user->getProfile_image()?>" alt=""></td>
-    
-        <td <?php if ($friendsStatus == true) { echo 'style="display: none;"'; } ?> ><form method="post">
-                <input type="hidden" name="friend_id" value="<?php echo $user->getId_user(); ?>">
-                <input type="submit" name="add_friend" value="Add Friend">
-            </form></td>
-        <td <?php if ($friendsStatus == false) { echo 'style="display: none;"'; } ?> ><form method="post">
-                <input type="hidden" name="friend_id" value="<?php echo $user->getId_user(); ?>">
-                <input type="submit" name="unfollow" value="Unfollow">
-            </form></td>
-        <td><?php if ($friendsStatus == true){
-            echo "Friends";
-        } else {
-            echo "Not Friends";
-        } ?></td>
-        
-    </tr>
+    <div class="row mt-3">
+        <div class="col-md-4 d-flex align-items-center justify-content-center">
+            <h3>
+                <?php echo $user->getFirst_name()?>
+                <?php echo $user->getLast_name()?>
+            </h3>
+        </div>
+        <div class="col-md-4 d-flex align-items-center justify-content-center">
+            <img src="<?php echo 'images/' . $user->getProfile_image()?>" id="profile_image" alt=""></td>
+        </div>
+        <div class="col-md-4 d-flex align-items-center justify-content-center">
+            <form method="post">
+                    <input type="hidden" name="friend_id" value="<?php echo $user->getId_user(); ?>">
+                    <input id="logout" type="submit" name="unfollow" value="Unfollow">
+                </form>
+        </div>
+    </div>
     <?php } endforeach ?>
-</table>
-        
+
+</div>
         <script src="" async defer></script>
     </body>
 </html>

@@ -8,6 +8,7 @@ class PhotoDB {
     public static function getPhotoById($id_photo){
         $db = new Database();
         $dbConn = $db->getDBConn();
+        $id_photo = (int)$id_photo;
 
         if ($dbConn){
             $query = "Select * From photo Where id_photo = $id_photo"; 
@@ -38,6 +39,7 @@ class PhotoDB {
 
         $db = new Database();
         $dbConn = $db->getDBConn();
+        $id_photo_category = (int)$id_photo_category;
 
         if ($dbConn){
             $query = "Select * From photo Where id_photo_category = $id_photo_category Order By upload_date Desc";
@@ -53,6 +55,7 @@ class PhotoDB {
 
         $db = new Database();
         $dbConn = $db->getDBConn();
+        $id_user = (int)$id_user;
 
         if ($dbConn){
             $query = "Select * From photo Where id_user = $id_user Order By upload_date Desc";
@@ -68,6 +71,8 @@ class PhotoDB {
 
         $db = new Database();
         $dbConn = $db->getDBConn();
+        $id_user = (int)$id_user;
+        $id_photo_category = (int)$id_photo_category;
 
         if ($dbConn){
             $query = "Select p.id_photo, p.id_user, p.id_photo_category, p.photo_name, p.description, p.photo_url, p.upload_date, p.location
@@ -87,6 +92,7 @@ class PhotoDB {
     public static function deletePhoto($id_photo){
         $db = new Database();
         $dbConn = $db->getDBConn();
+        $id_photo = (int)$id_photo;
         if($dbConn){
             $query = "Delete From photo Where id_photo = $id_photo";
 
@@ -100,10 +106,19 @@ class PhotoDB {
     public static function addPhoto($id_user, $id_photo_category, $photo_name, $description, $photo_url, $upload_date, $location) {
         $db = new Database();
         $dbConn = $db->getDbConn();
+        $id_user = (int)$id_user;
+        $id_photo_category = (int)$id_photo_category;
 
         if ($dbConn) {
             $query = "Insert Into photo (id_user, id_photo_category, photo_name, description, photo_url, upload_date, location)
-                Values($id_user, $id_photo_category, '$photo_name', '$description', '$photo_url', '$upload_date', '$location')";
+                Values(
+                $id_user, 
+                $id_photo_category, 
+                \"" .$photo_name . "\",
+                \"" .$description . "\",
+                \"" .$photo_url . "\",
+                \"" .$upload_date . "\",
+                \"" .$location. "\")";
 
             return $dbConn->query($query) === true;
         } else {
@@ -115,16 +130,19 @@ class PhotoDB {
     public static function updatePhoto($id_photo, $id_user, $id_photo_category, $photo_name, $description, $photo_url, $upload_date, $location) {
         $db = new Database();
         $dbConn = $db->getDbConn();
+        $id_photo = (int)$id_photo;
+        $id_user = (int)$id_user;
+        $id_photo_category = (int)$id_photo_category;
 
         if ($dbConn) {
             if ($dbConn) {
-                $query = "Update photo Set id_user = '$id_user',
-                    id_photo_category = '$id_photo_category',
-                    photo_name = '$photo_name',
-                    description = '$description',
-                    photo_url = '$photo_url',
-                    upload_date = '$upload_date',
-                    location = '$location'
+                $query = "Update photo Set id_user = $id_user,
+                    id_photo_category = $id_photo_category,
+                    photo_name = \"" . $photo_name . "\",
+                    description = \"" . $description . "\",
+                    photo_url = \"" . $photo_url . "\",
+                    upload_date = \"" . $upload_date. "\",
+                    location = \"" . $location . "\"
                     Where id_photo = $id_photo";
             
             return $dbConn->query($query) === true;

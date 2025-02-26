@@ -58,46 +58,79 @@ if (isset($_POST['cancel'])){
 <html>
 <script src="view\temp_view_photo.js"></script>
 <?php require_once("user_nav_bar.php"); ?>
-<h1>Add New Photo</h1>
-    <br>
-
+<div class="container text-center mt-5">
+    <div class="row pt-5">
+        <div class="col">
+            <h1>Add New Photo</h1>
+        </div>
+    </div>
     <form method="post" enctype="multipart/form-data">
-    <input type="file" name="myFile" id="file-upload" accept="image/*" onchange="previewImage(event);">
-        <br>
-        <img id="imagePreview" src="#" alt="Image Preview" style="max-width: 300px; max-height: 300px;">
-        <?php echo (isset($_POST['save']) ? $FileError: '') ?>
-        <br>
-        <label for="name">Name/Species:</label>
-        <br>
-        <input type="text" name="name">
-            <?php echo (isset($_POST['save']) ? $photoNameTestReturn: '') ?>
-        <br>
-        <label for="category">Category</label>
-        <br>
-        <select name="photo_category">
-            <?php foreach(PhotoCategoryController::getAllPhotoCategory() as $category) : ?>
-                <option value="<?php echo $category->getIdPhotoCategory() ?>"><?php echo $category->getCategoryName() ?></option>
-            <?php endforeach ?>
-        </select>
-        <?php echo (isset($_POST['save']) ? $categorySelectReturn: '') ?>
-        <br>
-        <label for="date_found">Date Found:</label>
-        <br>
-        <input type="date" name="date_found" value="<?php echo date('Y-m-d'); ?>">
-        <br>
-        <label for="location">Location:</label>
-        <br>
-        <input type="text" name="location">
-        <br>
-        <label for="description">Description:</label>
-        <br>
-        <textarea name="description" cols="75" rows="10"></textarea>
-        <br>
-        <input type="submit" name="save" value="Upload">
-        <input type="submit" name="cancel" value="Cancel">
+    <div class="row mt-3">
+        <div class="col">
+            <input type="file" name="myFile" id="logout" accept="image/*" onchange="previewImage(event);">
+        </div>
+
+        <div class="col">
+            <img id="imagePreview" src="#" alt="Image Preview" style="max-width: 300px; max-height: 300px;">
+        </div>
+    </div>
+    <div class="row mt-3">
+        <div class="col">
+            <?php echo (isset($_POST['save']) ? $FileError: '') ?>
+            <h3>
+            <label for="name">Name/Species:</label>
+            <input type="text" name="name">
+                <?php echo (isset($_POST['save']) ? $photoNameTestReturn: '') ?>
+            </h3>
+        </div>
+    </div>
+    <div class="row mt-3">
+        <div class="col">
+            <h3>
+                <label for="category">Category</label>
+                <select name="photo_category">
+                    <?php foreach(PhotoCategoryController::getAllPhotoCategory() as $category) : ?>
+                        <option value="<?php echo $category->getIdPhotoCategory() ?>"><?php echo $category->getCategoryName() ?></option>
+                    <?php endforeach ?>
+                </select>
+                <?php echo (isset($_POST['save']) ? $categorySelectReturn: '') ?>
+            </h3>
+        </div>
+    </div>
+    <div class="row mt-3">
+        <div class="col">
+            <h3>
+                <label for="date_found">Date Found:</label>
+                <input type="date" name="date_found" value="<?php echo date('Y-m-d'); ?>">
+            </h3>
+        </div>
+    </div>
+    <div class="row mt-3">
+        <div class="col">
+            <h3>
+                <label for="location">Location:</label>
+                <input type="text" name="location">
+            </h3>
+        </div>
+    </div>
+    <div class="row mt-3">
+        <div class="col">
+            <h3>
+                <label for="description">Description:</label>
+            </h3>
+                <textarea name="description" cols="75" rows="10"></textarea>
+
+        </div>
+    </div>
+    <div class="row mt-3">
+        <div class="col">
+            <input id="save" type="submit" name="save" value="Upload">
+            <input id="cancel" type="submit" name="cancel" value="Cancel">
+        </div>
+    </div>
     </form>
 
-
+</div>
 
 
 </html>

@@ -21,7 +21,6 @@
 // Gets all photos
     if (isset($_SESSION['user_id'])) {
         $photos = PhotoController::getAllPhotosByUser($_SESSION['user_id']);
-        $photo_categories = PhotoCategoryController::getAllPhotoCategory();
     }
 
     // deletes user
@@ -39,7 +38,6 @@ if (isset($_POST['delete'])) {
     }
 }
 
-
 if(isset($_POST['addPhoto'])){
     header("Location: user_add_photo.php");
 }
@@ -47,50 +45,59 @@ if(isset($_POST['addPhoto'])){
 
 <html>
     <?php require_once("user_nav_bar.php"); ?>
-    <form method="post">
-        <input type="submit" name="addPhoto" value="Add Photo" >
-    </form>
-    <h1>My Photos</h1>
-    <img src=<?php echo 'images/' . $userphoto ?> alt="User Photo">
-    <?php  ?>
-    <div class="container text-center">
-  <div class="row row-cols-4">
+<div class="container text-start mt-5">
+    <div class="row text-end mt-5">
+        <form class="mt-3" method="post">
+            <input id="logout" class="mt-4" type="submit" name="addPhoto" value="Add Photo" >
+        </form>
+    </div>
+    <div class="row text-center">
+        <h1>
+            <img src=<?php echo 'images/' . $userphoto ?> id="profile_image" alt="User Photo">
+            Your Photos</h1>
+    </div>
+</div>
+    
+<div class="container text-start">
+  <div class="row">
     <?php foreach ($photos as $photo) : ?>
-        <div class="col">
-            <form method="post">
+    <div class="col">
+        <form method="post">
+            <div class="row">
                 <input type="hidden" name="photo_url" value="<?php echo $photo->getPhoto_url()?>">
                 <a href="<?php echo "user_view_one_photo.php?ID_photo=" . 
                     $photo->getId_photo() ?>">
-                    
-                    <img src=<?php echo "images\\" . $photo->getPhoto_url()?>>
+                    <img src=<?php echo "images\\" . $photo->getPhoto_url()?> id="regular_photos">
                 </a>
-                <br>
-                <label for="name">Name:</label>
-                <input type="text" name="name" value="<?php echo $photo->getPhoto_name() ?>">
-                <br>
-                <label for="category">category</label>
-                <select name="photo_category">
-                    <?php foreach($photo_categories as $category) :
-                        if ($photo->getId_photo_category()==$category->getIdPhotoCategory()){ ?>
-                            <?php $selectedOption = '<option value ="' . $category->getIdPhotoCategory() . '"selected>' . $category->getCategoryName() . '</option>' ;
-                            echo $selectedOption;
-                            ?>
-                        <?php } else { ?>
-                            <option value="<?php echo $category->getIdPhotoCategory() ?>"><?php echo $category->getCategoryName()?></option>
-                        <?php }  ?>
-                    <?php endforeach ?>
-                </select>
-                <br>
-                <label for="txtdate">Date</label>
-                <input type="text" name="txtdate" value="<?php echo $photo->getUpload_date() ?>">
-                <br>
-                <?php echo(isset($_POST['delete']) ? $delete_error : '')  ?>
-                <input type="hidden" name="photoDeleteNo" value="<?php echo $photo->getId_photo() ?>">
-                <input type="submit" name="delete"  value = "Delete">
-            </form>
+            </div>
+            <div class="row-4">
+                <div class="col">
+                    <h3>Name: <?php echo $photo->getPhoto_name() ?></h3>
+                </div>
+            </div>
+            <div class="row-4">
+                <div class="col">
+                    <h3>Category: <?php $myCategory = PhotoCategoryController::getCategoryById($photo->getId_photo_category());
+                    echo $myCategory->getCategoryName();
+                    ?></h3>
+                </div>
+            </div>
+            <div class="row-4">
+                <div class="col">
+                    <h3>Date: <?php echo $photo->getUpload_date() ?></h3>
+                </div>
+            </div>
+            <div class="row-4">
+                <div class="col">
+                    <?php echo(isset($_POST['delete']) ? $delete_error : '')  ?>
+                    <input type="hidden" name="photoDeleteNo" value="<?php echo $photo->getId_photo() ?>">
+                    <input id="delete" type="submit" name="delete"  value = "Delete">
+                </div>
+            </div>
         </div>
+        </form>
     <?php endforeach ?>
+    </div>
   </div>
-</div>
 
 </html>

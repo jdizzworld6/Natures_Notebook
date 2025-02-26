@@ -55,18 +55,21 @@ if (isset($_POST['cancel'])){
 <html>
 <script src="view\temp_view_photo.js"></script>
 <?php require_once("user_nav_bar.php"); ?>
-<h1>Add Profile Image</h1>
-    <br>
-
-    <form method="post" enctype="multipart/form-data">
-        <input type="file" name="myFile" id="file-upload" accept="image/*" onchange="previewImage(event);">
-        <br>
-        <img id="imagePreview" src="#" alt="Image Preview" style="max-width: 300px; max-height: 300px;">
-
-        <?php echo (isset($_POST['save']) ? $FileError: '') ?>
-        <br>
-        <input type="submit" name="save" value="Upload">
-        <input type="submit" name="cancel" value="Cancel">
-    </form>
-
+<div class="container text-center mt-5">
+    <div class="row pt-5">
+        <div class="col">
+            <h1>Add Profile Image</h1>
+        </div>
+    </div>
+    <div class="row mt-3">
+        <form method="post" enctype="multipart/form-data">
+            <input type="file" name="myFile" id="logout" accept="image/*" onchange="previewImage(event);">
+            <img id="imagePreview" src="#" alt="Image Preview" style="max-width: 300px; max-height: 300px;">
+    </div>
+            <?php echo (isset($_POST['save']) ? $FileError: '') ?>
+            <br>
+            <input id="save" type="submit" name="save" value="Upload">
+            <input id="cancel" type="submit" name="cancel" value="Cancel">
+        </form>
+</div>
 </html>

@@ -33,37 +33,58 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </head>
 <body>
-    <h1>Welcome to Nature's Notebook!</h1>
-    <img src="imagesWebpage\venusFlytrap.png" alt="venusFlytrap" width="250" height="200" >
-    <img src="imagesWebpage\bluejay.png" alt="bluejay" width="250" height="200">
-    <img src="imagesWebpage\racoon.png" alt="racoon" width="250" height="200">
-    <img src="imagesWebpage\redmushroom.png" alt="redmushroom" width="250" height="200">
-    <img src="imagesWebpage\naturalbridge.png" alt="naturalbridge" width="260" height="200">
-    <img src="imagesWebpage\rhinobeetle.png" alt="rhinobeetle" width="230" height="200">
-   </h1>
-    <h2>Already a member? Sign in here</h2>
-    <form method="post">
-        <div class="mb-3">
-          <label for="exampleInputEmail1" class="form-label">User Name</label>
-          <input type="text" class="form-control" name="logID">
+
+    <div class="container text-center mt-5">
+      <h1>Welcome to Nature's Notebook!</h1>
+        <div class="row mt-3">
+        <div class="col-md-2">
+          <img src="imagesWebpage\venusFlytrap.png" alt="venusFlytrap" width="250" height="200" >
         </div>
-        <div class="mb-3">
-          <label for="exampleInputPassword1" class="form-label">Password</label>
-          <input type="password" class="form-control" id="exampleInputPassword1" name="password">
-          <?php echo (isset($_POST['save']) ? $error_message : '') ?>
+        <div class="col-md-2">
+          <img src="imagesWebpage\bluejay.png" alt="bluejay" width="250" height="200">
         </div>
+        <div class="col-md-2">
+          <img src="imagesWebpage\racoon.png" alt="racoon" width="250" height="200">
         </div>
-        <button name="save" type="submit" class="btn btn-secondary btn-lg">Sign In</button>
-      </form>
-      <h3>Still need to start your adventure? Click below to Create and Account:</h3>
-      <button type="button" class="btn btn-secondary btn-lg">Create Account</button>
-      <button type="button" class="btn btn-secondary btn-lg">Update Exsisting Account</button>
-      <h6>About Us</h6>
-      <p> Nature's Notebook is a unique website where you can upload photos of your nature adventures! 
-        Upload images, add descriptions and dates, and even share with your friends and other fellow adventurers! 
-        This website is meant to be your own personal wildlife journal. Happy exploring! 
-      </p>
-      
+        <div class="col-md-2">
+          <img src="imagesWebpage\redmushroom.png" alt="redmushroom" width="250" height="200">
+        </div>
+        <div class="col-md-2">
+          <img src="imagesWebpage\naturalbridge.png" alt="naturalbridge" width="250" height="200">
+        </div>
+        <div class="col-md-2">
+          <img src="imagesWebpage\rhinobeetle.png" alt="rhinobeetle" width="250" height="200">
+        </div>
+      </div>
+    <h2 class="mt-3">Already a member? Sign in here</h2>
+    <h3>Still need to start your adventure? Click below to Create and Account:</h3>
+    </div>
+    <div class="container text-center mt-5">
+      <h2>Already a member? Sign in here</h2>
+      <form method="post">
+          <div class="row-4">
+            <label for="exampleInputEmail1" class="form-label">User Name</label>
+          </div>
+          <div class="row-4">
+            <input type="text" name="logID" >
+          </div>
+          <div class="row-4">
+            <label for="exampleInputPassword1" class="form-label">Password</label>
+          </div>
+          <div class="row-4">
+            <input type="password" id="exampleInputPassword1" name="password">
+          </div>
+            <?php echo (isset($_POST['save']) ? $error_message : '') ?>
+          <div class="row-4 mt-3">
+          <button name="save" type="submit" class="btn btn-secondary btn-lg">Sign In</button>
+          </div>
+        </form>
+        <h6 class="mt-5">About Us</h6>
+        <p> Nature's Notebook is a unique website where you can upload photos of your nature adventures! 
+          Upload images, add descriptions and dates, and even share with your friends and other fellow adventurers! 
+          This website is meant to be your own personal wildlife journal. Happy exploring! 
+        </p>
+      </div>
     
 </body>
 

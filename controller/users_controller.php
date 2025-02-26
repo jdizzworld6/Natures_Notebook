@@ -64,7 +64,6 @@ class UsersController {
         return UsersDB::addUser(
             $user->getFirst_name(),
             $user->getLast_name(),
-            $user->getProfile_image(),
             $user->getDate_of_birth(),
             $user->getPhone_number(),
             $user->getAddress(),
@@ -73,7 +72,8 @@ class UsersController {
             $user->getZip(),
             $user->getEmail(),
             $user->getUsername(),
-            $user->getPassword()
+            $user->getPassword(),
+            $user->getUserLevel()
         );
     }
     // update user
@@ -105,6 +105,22 @@ class UsersController {
     public static function validUser($userID, $password){
         // running query to recieve results from query
         $queryRes = UsersDB::getUserValidation($userID, $password);
+        // changing query results to new user and getting user level
+        if($queryRes){
+            $user = self::rowToUsers($queryRes);
+            if ($user->getPassword() === $password){
+                return $user;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+
+    public static function getUserByUserNamePassword($userName, $password){
+        // running query to recieve results from query
+        $queryRes = UsersDB::getUserByUsernamePassword($userName, $password);
         // changing query results to new user and getting user level
         if($queryRes){
             $user = self::rowToUsers($queryRes);

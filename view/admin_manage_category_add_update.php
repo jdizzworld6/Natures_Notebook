@@ -57,8 +57,7 @@ if (isset($_POST['save'])){
     <h2><?php echo $pageTitle ?></h2>
     <form method="post">
     <input type="hidden" name="id_photo_category" value="<?php echo $photo_category->getIdPhotoCategory(); ?>">
-    <h2>Photo Category ID: <input type="text" name="id_photo_category" value="<?php echo $photo_category->getIdPhotoCategory(); ?>">
-    </h2>
+    
     <h2>Photo Category Name: <input type="text" name="category_name" value="<?php echo $photo_category->getCategoryName(); ?>">
         <?php echo (isset($_POST['save']) ? $categoryDescriptionTestReturn : '') ?>
     </h2>

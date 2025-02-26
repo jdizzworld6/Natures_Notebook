@@ -8,7 +8,7 @@ class FriendDB {
     public static function getFriendById($id_friends){
         $db = new Database();
         $dbConn = $db->getDBConn();
-
+        $id_friends = (int)$id_friends;
         if ($dbConn){
             $query = "
             SELECT f.id_friends, f.id_your_friends, u.id_user, u.first_name, u.last_name, u.profile_image
@@ -42,6 +42,7 @@ class FriendDB {
             return false;
         }
     }
+
     // delete friend by id
     // tested
     public static function getDeleteFriend($id_user, $id_friends){
@@ -66,6 +67,8 @@ class FriendDB {
     public static function getAddFriend($id_user, $id_your_friends){
         $db = new Database();
         $dbConn = $db->getDBConn();
+        $id_user = (int)$id_user;
+        $id_your_friends = (int)$id_your_friends;
 
         if ($dbConn){
             $query = "
@@ -96,4 +99,6 @@ class FriendDB {
             return false;
         }
     }
+
+
 }

@@ -8,8 +8,10 @@ class PhotoCategoryDB {
         $db = new Database();
         $dbConn = $db->getDBConn();
 
+        $id_photo_category = (int)$id_photo_category;
+
         if ($dbConn){
-            $query = "Select * From photo_category Where id_photo_category = '$id_photo_category'"; 
+            $query = "Select * From photo_category Where id_photo_category = $id_photo_category"; 
             $result = $dbConn->query($query);
             return $result->fetch_assoc();
         } else {
